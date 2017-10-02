@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+- '2.3.3'
+env:
+- DB=postgresql
+script:
+- bundle exec rspec
+- bundle exec brakeman --exit-on-warn --quiet -f plain
+- bundle exec rubycritic --minimum-score 95 --mode-ci --no-browser
+- FAIL_ON_ERROR=1 bundle exec rake traceroute
+before_script:
+- bundle exec rake db:create
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+bundler_args: --without production
