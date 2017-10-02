@@ -8,6 +8,8 @@
 /.bundle
 
 # Ignore all logfiles and tempfiles.
+coverage
+/db/data/*
 /log/*
 /tmp/*
 !/log/.keep
