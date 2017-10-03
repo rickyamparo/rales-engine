@@ -44,7 +44,7 @@ describe "Items API" do
           Item.create(name: "Hula Hoop", merchant_id: merchant.id)
         end
 
-        get "/api/v1/items/find?name=Glengoolie Blue"
+        get "/api/v1/items/find?name=Glengoolie%20blue"
 
         item = JSON.parse(response.body)
 
