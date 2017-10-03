@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rubycritic'
   gem 'brakeman'
   gem 'rspec-rails'
+  gem 'postgres-copy'
 end
 
 group :development do
