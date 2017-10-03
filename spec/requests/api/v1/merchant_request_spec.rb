@@ -12,6 +12,7 @@ describe "Merchants API" do
       merchants = JSON.parse(response.body)
 
       expect(response).to be_success
+      expect(merchants.first['name']).to eq("Timmy")
       expect(merchants.count).to eq(3)
     end
   end
