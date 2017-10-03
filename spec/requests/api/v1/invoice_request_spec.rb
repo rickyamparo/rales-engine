@@ -1,36 +1,50 @@
 require 'rails_helper'
 
-describe "Merchants API" do
-    context "GET /merchants" do
-      it "sends a list of merchants" do
-        3.times do
-          Merchant.create(name: "Timmy")
+require 'rails_helper'
+
+describe "Invoices API" do
+    context "GET /invoices" do
+      it "sends a list of invoices" do
+      customer = Customer.create(name: "Joe")
+      merchant = Merchant.create(name: "Timmy")
+      3.times do
+          Invoice.create(
+            customer: customer,
+            merchant: merchant,
+            status: 'complete'
+          )
       end
 
-      get '/api/v1/merchants'
+      get '/api/v1/invoices'
 
-      merchants = JSON.parse(response.body)
+      invoices = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(merchants.first['name']).to eq("Timmy")
-      expect(merchants.count).to eq(3)
+      expect(invoices.first['status']).to eq("complete")
+      expect(invoices.count).to eq(3)
     end
   end
-  context "GET /merchants/find?name=Johann" do
-    it "sends data on a merchant meeting the search criteria" do
+  context "GET /invoices/:id" do
+    it "sends a single invoice" do
+    customer = Customer.create(name: "Joe")
+    merchant = Merchant.create(name: "Timmy")
+    3.times do
+        Invoice.create(
+          customer: customer,
+          merchant: merchant,
+          status: 'complete'
+        )
+    end
 
-      2.times do
-        Merchant.create(name: "Timmy")
-      end
+    get '/api/v1/invoices'
 
-      Merchant.create(name: "Johann")
+    invoices = JSON.parse(response.body)
 
-      get "/api/v1/merchants/find?name=johann"
-
-      merchant = JSON.parse(response.body)
-
-      expect(response).to be_success
-      expect(merchant['name']).to eq("Johann")
+    expect(response).to be_success
+    expect(invoices.first['status']).to eq("complete")
+    expect(invoices.count).to eq(1)
     end
   end
 end
+
+  # id,customer_id,merchant_id,status,created_at,updated_at
