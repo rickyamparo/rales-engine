@@ -1,7 +1,7 @@
 class Api::V1::Merchants::FindAllController < ApplicationController
   def index
     if params["name"]
-      render json: Merchant.where(name: params["name"].capitalize)
+      render json: Merchant.where("lower(name) = ?", params["name"].downcase)
     elsif params["id"]
       render json: Merchant.where(id: params["id"])
     elsif params["created_at"]
