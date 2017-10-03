@@ -49,7 +49,7 @@ describe "Merchants API" do
     end
   end
   context "GET /merchants/find_all?name=johann" do
-    it "sends data on a merchant meeting the search criteria" do
+    it "sends data on all merchants meeting the search criteria" do
 
       2.times do
         Merchant.create(name: "Timmy")
