@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
       end
+      resources :invoices, only: [:show, :index]
       resources :merchants, only: [:show, :index]
     end
   end
