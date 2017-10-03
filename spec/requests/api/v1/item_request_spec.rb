@@ -132,4 +132,56 @@ describe "Items API" do
         expect(items.first['name']).to eq("Kunai")
         expect(items.last['name']).to eq("Smoke Ball")
       end
+
+    context "GET /items/find?description=Dangerous"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", description: "Dangerous", merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find?description=Dangerous"
+
+        item = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(item['name']).to eq("Kunai")
+      end
+
+    context "GET /items/find_all?description=Dangerous"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", description: "Dangerous", merchant_id: Merchant.first.id)
+        Item.create(id: 6, name: "Smoke Ball", description: "Dangerous", merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find_all?description=Dangerous"
+
+        items = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(items.first['name']).to eq("Kunai")
+        expect(items.last['name']).to eq("Smoke Ball")
+      end
+
+    context "GET /items/find?unit_price=10000"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", unit_price: 10000, merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find?unit_price=10000"
+
+        item = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(item['name']).to eq("Kunai")
+      end
+
+    context "GET /items/find_all?unit_price=10000"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", unit_price: 10000, merchant_id: Merchant.first.id)
+        Item.create(id: 6, name: "Smoke Ball", unit_price: 10000, merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find_all?unit_price=10000"
+
+        items = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(items.first['name']).to eq("Kunai")
+        expect(items.last['name']).to eq("Smoke Ball")
+      end
 end
