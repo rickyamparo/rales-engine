@@ -35,7 +35,7 @@ describe "Items API" do
         expect(item['name']).to eq("Glengoolie Blue")
       end
 
-    context "GET /merchants/find?name=Glengoolie%20Blue"
+    context "GET /items/find?name=Glengoolie%20Blue"
       it "sends data on a item meeting the search criteria" do
         merchant = Merchant.create(name: "Jerry")
         Item.create(name: "Glengoolie Blue", merchant_id: merchant.id)
@@ -50,5 +50,22 @@ describe "Items API" do
 
         expect(response).to be_success
         expect(item['name']).to eq("Glengoolie Blue")
+      end
+
+    context "GET /items/find?name=Hula%20Hoop"
+      it "sends data on all items meeting the search criteria" do
+        merchant = Merchant.create(name: "Jerry")
+        Item.create(name: "Glengoolie Blue", merchant_id: merchant.id)
+
+        3.times do
+          Item.create(name: "Hula Hoop", merchant_id: merchant.id)
+        end
+
+        get "/api/v1/items/find_all?name=Hula%20Hoop"
+
+        items = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(items.first['name']).to eq("Hula Hoop")
       end
 end
