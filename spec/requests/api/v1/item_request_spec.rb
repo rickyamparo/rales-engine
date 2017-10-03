@@ -80,4 +80,56 @@ describe "Items API" do
         expect(items.first['name']).to eq("Hula Hoop")
         expect(items.count).to eq(1)
       end
+
+    context "GET /items/find?created_at=2012-03-27%2014:53:59%20UTC"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", created_at: '2012-03-27 14:53:59 UTC', merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find?created_at=2012-03-27%2014:53:59%20UTC"
+
+        item = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(item['name']).to eq("Kunai")
+      end
+
+    context "GET /items/find_all?created_at=2012-03-27%2014:53:59%20UTC"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", created_at: '2012-03-27 14:53:59 UTC', merchant_id: Merchant.first.id)
+        Item.create(id: 6, name: "Smoke Ball", created_at: '2012-03-27 14:53:59 UTC', merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find_all?created_at=2012-03-27%2014:53:59%20UTC"
+
+        items = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(items.first['name']).to eq("Kunai")
+        expect(items.last['name']).to eq("Smoke Ball")
+      end
+
+    context "GET /items/find?updated_at=2012-03-27%2014:53:59%20UTC"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", updated_at: '2012-03-27 14:53:59 UTC', merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find?updated_at=2012-03-27%2014:53:59%20UTC"
+
+        item = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(item['name']).to eq("Kunai")
+      end
+
+    context "GET /items/find_all?updated_at=2012-03-27%2014:53:59%20UTC"
+      it "sends data on an item meeting the search criteria" do
+        Item.create(id: 5, name: "Kunai", updated_at: '2012-03-27 14:53:59 UTC', merchant_id: Merchant.first.id)
+        Item.create(id: 6, name: "Smoke Ball", updated_at: '2012-03-27 14:53:59 UTC', merchant_id: Merchant.first.id)
+
+        get "/api/v1/items/find_all?updated_at=2012-03-27%2014:53:59%20UTC"
+
+        items = JSON.parse(response.body)
+
+        expect(response).to be_success
+        expect(items.first['name']).to eq("Kunai")
+        expect(items.last['name']).to eq("Smoke Ball")
+      end
 end
