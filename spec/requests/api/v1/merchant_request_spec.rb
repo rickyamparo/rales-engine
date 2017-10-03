@@ -29,16 +29,16 @@ describe "Merchants API" do
       expect(response).to be_success
       expect(merchant['name']).to eq("Johnny")
     end
-    context "GET /merchants/find?name='Johann'"
+    context "GET /merchants/find?name=Johann"
       it "sends data on a merchant meeting the search criteria" do
 
         2.times do
           Merchant.create(name: "Timmy")
         end
 
-        Merchant.create(name: 'Johann')
+        Merchant.create(name: "Johann")
 
-        get "/api/v1/merchants/find?name='Johann'"
+        get "/api/v1/merchants/find?name=johann"
 
         merchant = JSON.parse(response.body)
 
