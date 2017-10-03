@@ -45,5 +45,22 @@ describe "Merchants API" do
         expect(response).to be_success
         expect(merchant['name']).to eq("Johann")
       end
+      context "GET /merchants/find_all?name=timmy"
+        it "sends data on a merchant meeting the search criteria" do
+
+          2.times do
+            Merchant.create(name: "Timmy")
+          end
+
+          Merchant.create(name: "Johann")
+
+          get "/api/v1/merchants/find_all?name=timmy"
+
+          merchant = JSON.parse(response.body)
+
+          expect(response).to be_success
+          expect(merchant.first['name']).to eq("Timmy")
+          expect(merchant.count).to eq(2)
+        end
   end
 end
