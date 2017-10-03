@@ -1,7 +1,9 @@
 class Api::V1::Items::FindController < ApplicationController
   def index
     if params["name"]
-      render json: Item.find_by(name: params["name"])
+      render json: Item.where(
+      "lower(name) = ?", params["name"].downcase)
+      .first
     elsif params["id"]
       render json: Item.find(params["id"])
     elsif params["description"]
