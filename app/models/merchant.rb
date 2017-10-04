@@ -3,16 +3,17 @@ class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices
 
-  def total_revenue
-    hash = self.as_json
-    hash["revenue"] = Invoice
-    .where(merchant_id: id)
+  def total_revenue(filter = nil, limit = 1)
+    Invoice
+    .where(filter)
     .joins(:invoice_items)
     .joins(:transactions)
-    .select('invoice_items.quantity * invoice_items.unit_price AS total_value')
-    .where('transactions.result = ?', 'success')
-    .map(&:total_value)
-    .reduce(:+)
-    hash
+    .merge(Transaction.success)
+    .select('sum(invoice_items.quantity *
+       invoice_items.unit_price) AS total_value')
+    .order("total_value DESC")
+    .limit(limit)
+    .first
+    .total_value
   end
 end
