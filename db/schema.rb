@@ -76,3 +76,20 @@ ActiveRecord::Schema.define(version: 20171003010947) do
   add_foreign_key "items", "merchants"
   add_foreign_key "transactions", "invoices"
 end
+
+#transaction
+# .bigint "invoice_id"
+# t.bigint "credit_card_number"
+# t.string "credit_card_expiration_date"
+# t.string "result"
+
+#invoice
+# t.bigint "customer_id"
+# t.bigint "merchant_id"
+# t.string "status"
+
+#invoice item
+# t.bigint "item_id"
+# t.bigint "invoice_id"
+# t.bigint "quantity"
+# t.bigint "unit_price"
