@@ -4,7 +4,8 @@ class Merchant < ApplicationRecord
   has_many :invoices
 
   def total_revenue
-    Invoice
+    hash = self.as_json
+    hash["revenue"] = Invoice
     .where(merchant_id: id)
     .joins(:invoice_items)
     .joins(:transactions)
@@ -12,5 +13,6 @@ class Merchant < ApplicationRecord
     .where('transactions.result = ?', 'success')
     .map(&:total_value)
     .reduce(:+)
+    hash
   end
 end
