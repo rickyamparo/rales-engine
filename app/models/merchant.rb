@@ -9,7 +9,8 @@ class Merchant < ApplicationRecord
     .joins(:invoice_items)
     .joins(:transactions)
     .merge(Transaction.success)
-    .select('sum(invoice_items.quantity * invoice_items.unit_price) AS total_value')
+    .select('sum(invoice_items.quantity *
+       invoice_items.unit_price) AS total_value')
     .order("total_value DESC")
     .limit(limit)
     .first
