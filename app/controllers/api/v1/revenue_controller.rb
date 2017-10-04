@@ -1,11 +1,12 @@
 class Api::V1::RevenueController < ApplicationController
   def index
     if params['created_at']
-      total_revenue = Merchant.find(merchant_params[:merchant_id]).total_revenue(merchant_params)
+      revenue = Merchant.find(merchant_params[:merchant_id])
+      .revenue(merchant_params)
     else
-      total_revenue = Merchant.find(merchant_params[:merchant_id]).total_revenue
+      revenue = Merchant.find(merchant_params[:merchant_id]).revenue
     end
-    render json: total_revenue, :serializer => TotalRevenueSerializer
+    render json: revenue, :serializer => TotalRevenueSerializer
   end
 
   private

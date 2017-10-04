@@ -62,7 +62,7 @@ describe "Merchants Business Intelligence API" do
 
       merchant_revenue = JSON.parse(response.body)
       expect(response).to be_success
-      expect(merchant_revenue["total_revenue"]).to eq('12.00')
+      expect(merchant_revenue["revenue"]).to eq('12.00')
     end
   end
   context "GET /merchants/:id/revenue?date=2012-03-27%2014:53:59%20UTC" do
@@ -73,7 +73,7 @@ describe "Merchants Business Intelligence API" do
 
       merchant_revenue = JSON.parse(response.body)
       expect(response).to be_success
-      expect(merchant_revenue["total_revenue"]).to eq("12.00")
+      expect(merchant_revenue["revenue"]).to eq("12.00")
     end
   end
 end

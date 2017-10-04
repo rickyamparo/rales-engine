@@ -3,7 +3,7 @@ class Merchant < ApplicationRecord
   has_many :items
   has_many :invoices
 
-  def total_revenue(filter = nil, limit = 1)
+  def revenue(filter = nil, limit = 1)
     Invoice
     .where(filter)
     .joins(:invoice_items)
