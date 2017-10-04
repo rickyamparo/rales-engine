@@ -10,7 +10,7 @@ class Merchant < ApplicationRecord
     .joins(:invoice_items)
     .joins(:transactions)
     .select('invoice_items.quantity * invoice_items.unit_price AS total_value')
-    .where('transactions.result = ?', 'success')
+    .merge(Transaction.success)
     .map(&:total_value)
     .reduce(:+)
     hash
