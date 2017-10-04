@@ -24,7 +24,7 @@ class Item < ApplicationRecord
     end
   end
 
-  def self.most_revenue(quantity)
+  def self.most_revenue(quantity = 1)
     select('items.*, invoice_items.quantity * invoice_items.unit_price AS revenue')
     .joins(:invoice_items)
     .distinct.order('revenue desc')
