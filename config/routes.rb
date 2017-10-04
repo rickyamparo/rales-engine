@@ -18,8 +18,10 @@ Rails.application.routes.draw do
       namespace :items do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
+        resources :most_revenue, only: [:index]
       end
-      resources :items, only: [:index, :show]
+      resources :items, only: [:index, :show] do
+      end
     end
   end
 end

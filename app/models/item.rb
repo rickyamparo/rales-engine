@@ -23,4 +23,12 @@ class Item < ApplicationRecord
       find_by(updated_at: params["updated_at"])
     end
   end
+
+  def self.most_revenue(quantity)
+    select('items.*, invoice_items.quantity * invoice_items.unit_price AS revenue')
+    .joins(:invoice_items)
+    .distinct.order('revenue desc')
+    .first(quantity)
+  end
+
 end
