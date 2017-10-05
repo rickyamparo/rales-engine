@@ -1,6 +1,3 @@
-# GET /api/v1/items/most_revenue?quantity=x
- # returns the top x items ranked by total revenue generated
-
 require 'rails_helper'
 
 describe "Items Business Intelligence API" do
@@ -45,15 +42,15 @@ describe "Items Business Intelligence API" do
     end
   end
 
-  context "GET /items/most_revenue?quantity=1" do
+  context "GET /items/most_revenue?quantity=x" do
     it "returns the top 1 items ranked by total revenue generated" do
       get "/api/v1/items/most_revenue?quantity=1"
 
       top_items = JSON.parse(response.body)
 
       expect(response).to be_success
+      expect(top_items.count).to eq(1)
       expect(top_items.first['name']).to eq("Wartooth")
-      expect(top_items.last['name']).to eq("Wartooth")
     end
     it "returns the top 2 items ranked by total revenue generated" do
       get "/api/v1/items/most_revenue?quantity=2"
@@ -77,4 +74,40 @@ describe "Items Business Intelligence API" do
       expect(top_items.third['name']).to eq("Metal")
     end
   end
+
+  context "GET /api/v1/items/most_items?quantity=x" do
+    it "returns the top 1 item instances ranked by total number sold" do
+      get '/api/v1/items/most_items?quantity=1'
+
+      top_items = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(top_items.count).to eq(1)
+      expect(top_items.first['name']).to eq("Wartooth")
+    end
+
+    it "returns the top 2 item instances ranked by total number sold" do
+      get '/api/v1/items/most_items?quantity=2'
+
+      top_items = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(top_items.count).to eq(2)
+      expect(top_items.first['name']).to eq("Wartooth")
+      expect(top_items.last['name']).to eq("Guitar")
+    end
+
+    it "returns the top 3 item instances ranked by total number sold" do
+      get '/api/v1/items/most_items?quantity=3'
+
+      top_items = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(top_items.count).to eq(3)
+      expect(top_items.first['name']).to eq("Wartooth")
+      expect(top_items.second['name']).to eq("Guitar")
+      expect(top_items.last['name']).to eq("Metal")
+    end
+  end
+
 end
