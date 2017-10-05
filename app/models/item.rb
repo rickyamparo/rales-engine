@@ -25,23 +25,21 @@ class Item < ApplicationRecord
   end
 
   def self.most_revenue(quantity = 5)
-    select('items.*, invoice_items.quantity * invoice_items.unit_price AS revenue')
-    .joins(:invoice_items)
-    .distinct
+    joins(invoice_items: [invoice:[:transactions]])
+    .select('items.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
+    .where('transactions.result = ?', 'success')
     .order('revenue desc')
-    .first(quantity)
+    .group(:id)
+    .limit(quantity)
   end
 
   def self.most_items(quantity = 5)
-    # select('items.*, invoice_items.quantity AS most_items')
-    # .joins(:invoice_items)
-    # .distinct
-    # .order('most_items desc')
-    # .first(quantity)
     joins(invoice_items: [invoice: [:transactions]])
     .select('items.*, sum(invoice_items.quantity) AS most_items')
     .where('transactions.result = ?', 'success')
-    .order('most_items desc').group(:id).limit(quantity)
+    .order('most_items desc')
+    .group(:id)
+    .limit(quantity)
   end
 
 end
