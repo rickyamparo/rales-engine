@@ -13,7 +13,9 @@ Rails.application.routes.draw do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
       end
-      resources :customers, only: [:index, :show]
+      resources :customers, only: [:index, :show] do
+        resources :favorite_merchant, only: [:index]
+      end
       resources :invoices, only: [:show, :index]
       resources :merchants, only: [:show, :index] do
         resources :revenue, only: [:index]
