@@ -2,18 +2,22 @@ class Merchant < ApplicationRecord
   acts_as_copy_target
   has_many :items
   has_many :invoices
+  has_many :transactions, through: :invoices
 
-  def total_revenue(filter = nil, limit = 1)
+  def revenue(filter = nil)
     Invoice
     .where(filter)
-    .joins(:invoice_items)
-    .joins(:transactions)
     .merge(Transaction.success)
-    .select('sum(invoice_items.quantity *
-       invoice_items.unit_price) AS total_value')
-    .order("total_value DESC")
-    .limit(limit)
-    .first
-    .total_value
+    .joins(:invoice_items, :transactions)
+    .sum("quantity * unit_price")
+  end
+
+  def self.favorite_customer(filter = nil)
+    results =
+    Invoice
+    .where(filter)
+    .group('customer_id')
+    .count
+    Customer.find(results.key(results.values.max))
   end
 end

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :invoices, only: [:show, :index]
       resources :merchants, only: [:show, :index] do
         resources :revenue, only: [:index]
+        resources :favorite_customer, only: [:index]
       end
 
       namespace :items do
