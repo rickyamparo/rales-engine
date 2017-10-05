@@ -12,4 +12,12 @@ class Customer < ApplicationRecord
     Merchant.find(results.key(results.values.max))
   end
 
+  def self.find_customer(params)
+    find_by(params)
+  end
+
+  def self.find_all(params)
+    where(params)
+  end
+
 end

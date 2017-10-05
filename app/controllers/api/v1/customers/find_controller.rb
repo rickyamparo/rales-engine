@@ -1,11 +1,11 @@
-class Api::V1::Invoices::FindController < ApplicationController
+class Api::V1::Customers::FindController < ApplicationController
   def index
-    render json: Invoice.find_customer(customer_params)
+    render json: Customer.find_customer(customer_params)
   end
 
   private
 
   def customer_params
-    params.permit(:id, :first_name, :last_name)
+    params.permit(:id, :first_name, :last_name, :created_at, :updated_at)
   end
 end
