@@ -41,4 +41,14 @@ class Merchant < ApplicationRecord
     .count
     Customer.find(results.key(results.values.max))
   end
+
+  def self.most_items(quantity = 5)
+    joins(invoices: [:invoice_items, :transactions])
+    .select('merchants.*, sum(invoice_items.quantity) AS most_items')
+    .where('transactions.result = ?', 'success')
+    .order('most_items desc')
+    .group(:id)
+    .limit(quantity)
+  end
+
 end

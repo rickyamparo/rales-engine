@@ -3,12 +3,14 @@ require 'rails_helper'
 describe "Merchants Business Intelligence API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
-    @merchant2 = Merchant.create(id: 2, name: "Joey")
+    @merchant_2 = Merchant.create(id: 2, name: "Johnny")
     customer = Customer.create(id: 1, first_name: "Pauly", last_name: "Shore")
     customer2 = Customer.create(id: 2, first_name: "Jazzy", last_name: "Jeff")
     item = Item.create(id: 1, merchant_id: 1, name: 'Sofa')
-    second_invoice = @merchant2.invoices.create(
+
+    merchant_2_invoice = @merchant_2.invoices.create(
       customer: customer,
+      merchant: @merchant_2,
       status: "shipped",
       created_at: '2012-02-27 14:53:59 UTC'
     )
@@ -36,6 +38,7 @@ describe "Merchants Business Intelligence API" do
       status: "shipped",
       created_at: '2012-02-27 14:53:59 UTC'
     )
+
     3.times do
       good_invoice.invoice_items.create(
         item_id: item.id,
@@ -61,13 +64,12 @@ describe "Merchants Business Intelligence API" do
         unit_price: 75,
         created_at: '2012-03-27 14:53:59 UTC'
       )
-      second_invoice.invoice_items.create(
+      merchant_2_invoice.invoice_items.create(
         item_id: item.id,
         quantity: 4,
         unit_price: 75,
         created_at: '2012-03-27 14:53:59 UTC'
       )
-
     end
     good_invoice.transactions.create(
       credit_card_number: '666',
@@ -84,12 +86,11 @@ describe "Merchants Business Intelligence API" do
       result: "failed",
       created_at: '2012-03-27 14:53:59 UTC'
     )
-    second_invoice.transactions.create(
+    merchant_2_invoice.transactions.create(
       credit_card_number: '666',
-      result: "failed",
+      result: "success",
       created_at: '2012-03-27 14:53:59 UTC'
     )
-
   end
   context "GET /merchants/:id/revenue" do
     it "returns the total revenue for that merchant across successful transactions" do
@@ -135,16 +136,25 @@ describe "Merchants Business Intelligence API" do
     end
   end
 
-  context "GET /api/v1/merchants/most_revenue?quantity=x" do
-    it "Returns the merchant who has generated the most total number of successful transactions." do
-      get "/api/v1/merchants/most_revenue?quantity=2"
+  context "GET /api/v1/merchants/most_items?quantity=x" do
+    it "returns the top 1 merchants ranked by total number of items sold" do
+      get "/api/v1/merchants/most_items?quantity=1"
 
-      merchant_revenue = JSON.parse(response.body)
+      top_merchants = JSON.parse(response.body)
+
       expect(response).to be_success
-      expect(merchant_revenue.first["id"]).to eq(1)
+      expect(top_merchants.count).to eq(1)
+      expect(top_merchants.first['name']).to eq("Timmy")
+    end
+
+    it "returns the top 2 merchants ranked by total number of items sold" do
+      get "/api/v1/merchants/most_items?quantity=2"
+
+      top_merchants = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(top_merchants.count).to eq(2)
+      expect(top_merchants.first['name']).to eq("Timmy")
     end
   end
 end
-
-# returns the top x merchants ranked by total revenue
-# GET /api/v1/merchants/most_revenue?quantity=x - Brandon
