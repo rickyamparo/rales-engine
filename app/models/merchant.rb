@@ -21,4 +21,3 @@ class Merchant < ApplicationRecord
     Customer.find(results.key(results.values.max))
   end
 end
-    # Merchant.favorite_customer('merchant_id = 2')
