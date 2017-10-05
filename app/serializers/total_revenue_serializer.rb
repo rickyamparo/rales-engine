@@ -1,7 +1,7 @@
 class TotalRevenueSerializer < ActiveModel::Serializer
-  attributes :revenue
+  attributes :total_revenue
 
-  def revenue
+  def total_revenue
     '%.2f' % (object.to_f / 100)
   end
 end
