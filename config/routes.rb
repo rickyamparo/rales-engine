@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         resources :most_items, only: [:index]
       end
       resources :items, only: [:index, :show] do
+        resources :best_day, only: [:index]
       end
     end
   end

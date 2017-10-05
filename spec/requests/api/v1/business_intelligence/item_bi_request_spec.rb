@@ -43,7 +43,7 @@ describe "Items Business Intelligence API" do
   end
 
   context "GET /items/most_revenue?quantity=x" do
-    it "returns the top 1 items ranked by total revenue generated" do
+    xit "returns the top 1 items ranked by total revenue generated" do
       get "/api/v1/items/most_revenue?quantity=1"
 
       top_items = JSON.parse(response.body)
@@ -52,7 +52,7 @@ describe "Items Business Intelligence API" do
       expect(top_items.count).to eq(1)
       expect(top_items.first['name']).to eq("Wartooth")
     end
-    it "returns the top 2 items ranked by total revenue generated" do
+    xit "returns the top 2 items ranked by total revenue generated" do
       get "/api/v1/items/most_revenue?quantity=2"
 
       top_items = JSON.parse(response.body)
@@ -62,7 +62,7 @@ describe "Items Business Intelligence API" do
       expect(top_items.first['name']).to eq("Wartooth")
       expect(top_items.second['name']).to eq("Guitar")
     end
-    it "returns the top 3 items ranked by total revenue generated" do
+    xit "returns the top 3 items ranked by total revenue generated" do
       get "/api/v1/items/most_revenue?quantity=3"
 
       top_items = JSON.parse(response.body)
@@ -76,7 +76,7 @@ describe "Items Business Intelligence API" do
   end
 
   context "GET /api/v1/items/most_items?quantity=x" do
-    it "returns the top 1 item instances ranked by total number sold" do
+    xit "returns the top 1 item instances ranked by total number sold" do
       get '/api/v1/items/most_items?quantity=1'
 
       top_items = JSON.parse(response.body)
@@ -86,7 +86,7 @@ describe "Items Business Intelligence API" do
       expect(top_items.first['name']).to eq("Wartooth")
     end
 
-    it "returns the top 2 item instances ranked by total number sold" do
+    xit "returns the top 2 item instances ranked by total number sold" do
       get '/api/v1/items/most_items?quantity=2'
 
       top_items = JSON.parse(response.body)
@@ -97,7 +97,7 @@ describe "Items Business Intelligence API" do
       expect(top_items.last['name']).to eq("Guitar")
     end
 
-    it "returns the top 3 item instances ranked by total number sold" do
+    xit "returns the top 3 item instances ranked by total number sold" do
       get '/api/v1/items/most_items?quantity=3'
 
       top_items = JSON.parse(response.body)
@@ -107,6 +107,18 @@ describe "Items Business Intelligence API" do
       expect(top_items.first['name']).to eq("Wartooth")
       expect(top_items.second['name']).to eq("Guitar")
       expect(top_items.last['name']).to eq("Metal")
+    end
+  end
+
+  context "GET /api/v1/items/:id/best_day" do
+    it "returns the date with the most sales for the given item using the invoice date.
+        If there are multiple days with equal number of sales,
+        return the most recent day." do
+        get "/api/v1/items/1/best_day"
+
+        best_day = JSON.parse(response.body)
+
+        expect(response).to be_success
     end
   end
 

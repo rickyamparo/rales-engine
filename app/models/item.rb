@@ -42,4 +42,15 @@ class Item < ApplicationRecord
     .limit(quantity)
   end
 
+  def best_day
+    hash = {}
+    hash['best_day'] = invoices.joins(:transactions)
+    .select('invoices.created_at, sum(invoice_items.quantity) AS total')
+    .where('transactions.result = ?', 'success')
+    .group(:id)
+    .order('total desc')
+    .first.created_at
+    hash
+  end
+
 end
