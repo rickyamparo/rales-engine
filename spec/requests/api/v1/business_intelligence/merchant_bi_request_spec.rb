@@ -3,19 +3,26 @@ require 'rails_helper'
 describe "Merchants Business Intelligence API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
-    merchant_2 = Merchant.create(id: 2, name: "Johnny")
-    merchant_2_invoice = merchant_2.invoices.create(
+    @merchant_2 = Merchant.create(id: 2, name: "Johnny")
+    merchant_2_invoice = @merchant_2.invoices.create(
       customer: customer,
-      merchant: merchant_2,
+      merchant: @merchant_2,
       status: "shipped",
       created_at: '2012-02-27 14:53:59 UTC'
     )
     merchant_2_invoice.transactions.create(
-      
+      credit_card_number: '666',
+      result: "failed",
+      created_at: '2012-03-27 14:53:59 UTC'
     )
     customer = Customer.create(id: 1, first_name: "Pauly", last_name: "Shore")
     customer2 = Customer.create(id: 2, first_name: "Jazzy", last_name: "Jeff")
     item = Item.create(id: 1, merchant_id: 1, name: 'Sofa')
+    second_invoice = @merchant2.invoices.create(
+      customer: customer,
+      status: "shipped",
+      created_at: '2012-02-27 14:53:59 UTC'
+    )
     good_invoice = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
@@ -65,6 +72,12 @@ describe "Merchants Business Intelligence API" do
         unit_price: 75,
         created_at: '2012-03-27 14:53:59 UTC'
       )
+      second_invoice.invoice_items.create(
+        item_id: item.id,
+        quantity: 4,
+        unit_price: 75,
+        created_at: '2012-03-27 14:53:59 UTC'
+      )
 
     end
     good_invoice.transactions.create(
@@ -82,6 +95,12 @@ describe "Merchants Business Intelligence API" do
       result: "failed",
       created_at: '2012-03-27 14:53:59 UTC'
     )
+    second_invoice.transactions.create(
+      credit_card_number: '666',
+      result: "failed",
+      created_at: '2012-03-27 14:53:59 UTC'
+    )
+
   end
   context "GET /merchants/:id/revenue" do
     it "returns the total revenue for that merchant across successful transactions" do
@@ -104,6 +123,19 @@ describe "Merchants Business Intelligence API" do
       expect(merchant_revenue["revenue"]).to eq("9.00")
     end
   end
+
+  context "GET /merchants/revenue?date=2012-03-27%2014:53:59%20UTC" do
+    it "returns the total revenue for all merchants across successful transactions" do
+
+      date = "2012-03-27%2014:53:59%20UTC"
+      get "/api/v1/merchants/revenue?date=#{date}"
+
+      merchant_revenue = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(merchant_revenue["total_revenue"]).to eq("9.00")
+    end
+  end
+
   context "GET /merchants/:id/favorite_customer" do
     it "Returns the customer who has conducted the most total number of successful transactions." do
       get "/api/v1/merchants/#{@merchant.id}/favorite_customer"
@@ -115,7 +147,7 @@ describe "Merchants Business Intelligence API" do
   end
 
   context "GET /api/v1/merchants/most_items?quantity=x" do
-    xit "returns the top 1 merchants ranked by total number of items sold" do
+    it "returns the top 1 merchants ranked by total number of items sold" do
       get "/api/v1/merchants/most_items?quantity=1"
 
       top_merchants = JSON.parse(response.body)
@@ -136,3 +168,6 @@ describe "Merchants Business Intelligence API" do
     end
   end
 end
+
+# returns the top x merchants ranked by total revenue
+# GET /api/v1/merchants/most_revenue?quantity=x - Brandon
