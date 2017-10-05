@@ -3,6 +3,16 @@ require 'rails_helper'
 describe "Merchants Business Intelligence API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
+    merchant_2 = Merchant.create(id: 2, name: "Johnny")
+    merchant_2_invoice = merchant_2.invoices.create(
+      customer: customer,
+      merchant: merchant_2,
+      status: "shipped",
+      created_at: '2012-02-27 14:53:59 UTC'
+    )
+    merchant_2_invoice.transactions.create(
+      
+    )
     customer = Customer.create(id: 1, first_name: "Pauly", last_name: "Shore")
     customer2 = Customer.create(id: 2, first_name: "Jazzy", last_name: "Jeff")
     item = Item.create(id: 1, merchant_id: 1, name: 'Sofa')
@@ -96,12 +106,33 @@ describe "Merchants Business Intelligence API" do
   end
   context "GET /merchants/:id/favorite_customer" do
     it "Returns the customer who has conducted the most total number of successful transactions." do
-      customer = customer
       get "/api/v1/merchants/#{@merchant.id}/favorite_customer"
 
       merchant_favorite = JSON.parse(response.body)
       expect(response).to be_success
       expect(merchant_favorite["id"]).to eq(1)
+    end
+  end
+
+  context "GET /api/v1/merchants/most_items?quantity=x" do
+    xit "returns the top 1 merchants ranked by total number of items sold" do
+      get "/api/v1/merchants/most_items?quantity=1"
+
+      top_merchants = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(top_merchants.count).to eq(1)
+      expect(top_merchants.first['name']).to eq("Timmy")
+    end
+
+    it "returns the top 2 merchants ranked by total number of items sold" do
+      get "/api/v1/merchants/most_items?quantity=2"
+
+      top_merchants = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(top_merchants.count).to eq(2)
+      expect(top_merchants.first['name']).to eq("Timmy")
     end
   end
 end
