@@ -24,11 +24,33 @@ class Item < ApplicationRecord
     end
   end
 
-  def self.most_revenue(quantity = 1)
-    select('items.*, invoice_items.quantity * invoice_items.unit_price AS revenue')
-    .joins(:invoice_items)
-    .distinct.order('revenue desc')
-    .first(quantity)
+  def self.most_revenue(quantity = 5)
+    joins(invoice_items: [invoice:[:transactions]])
+    .select('items.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue')
+    .where('transactions.result = ?', 'success')
+    .order('revenue desc')
+    .group(:id)
+    .limit(quantity)
+  end
+
+  def self.most_items(quantity = 5)
+    joins(invoice_items: [invoice: [:transactions]])
+    .select('items.*, sum(invoice_items.quantity) AS most_items')
+    .where('transactions.result = ?', 'success')
+    .order('most_items desc')
+    .group(:id)
+    .limit(quantity)
+  end
+
+  def best_day
+    hash = {}
+    hash['best_day'] = invoices.joins(:transactions)
+    .select('invoices.created_at, sum(invoice_items.quantity) AS total')
+    .where('transactions.result = ?', 'success')
+    .group(:id)
+    .order('total desc')
+    .first.created_at
+    hash
   end
 
 end
