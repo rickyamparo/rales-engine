@@ -6,7 +6,7 @@ class Api::V1::BestDayController < ApplicationController
  private
   
   def item_params
-    params.permit(:item_id)
+    params.permit(:id)
   end
   
 end
