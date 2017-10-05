@@ -4,6 +4,8 @@ describe "Merchants Business Intelligence API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
     @merchant_2 = Merchant.create(id: 2, name: "Johnny")
+    customer = Customer.create(id: 1, first_name: "Pauly", last_name: "Shore")
+    customer2 = Customer.create(id: 2, first_name: "Jazzy", last_name: "Jeff")
     merchant_2_invoice = @merchant_2.invoices.create(
       customer: customer,
       merchant: @merchant_2,
@@ -12,17 +14,10 @@ describe "Merchants Business Intelligence API" do
     )
     merchant_2_invoice.transactions.create(
       credit_card_number: '666',
-      result: "failed",
+      result: "success",
       created_at: '2012-03-27 14:53:59 UTC'
     )
-    customer = Customer.create(id: 1, first_name: "Pauly", last_name: "Shore")
-    customer2 = Customer.create(id: 2, first_name: "Jazzy", last_name: "Jeff")
     item = Item.create(id: 1, merchant_id: 1, name: 'Sofa')
-    second_invoice = @merchant2.invoices.create(
-      customer: customer,
-      status: "shipped",
-      created_at: '2012-02-27 14:53:59 UTC'
-    )
     good_invoice = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
@@ -72,13 +67,6 @@ describe "Merchants Business Intelligence API" do
         unit_price: 75,
         created_at: '2012-03-27 14:53:59 UTC'
       )
-      second_invoice.invoice_items.create(
-        item_id: item.id,
-        quantity: 4,
-        unit_price: 75,
-        created_at: '2012-03-27 14:53:59 UTC'
-      )
-
     end
     good_invoice.transactions.create(
       credit_card_number: '666',
@@ -91,11 +79,6 @@ describe "Merchants Business Intelligence API" do
       created_at: '2012-04-27 14:53:59 UTC'
     )
     bad_invoice.transactions.create(
-      credit_card_number: '666',
-      result: "failed",
-      created_at: '2012-03-27 14:53:59 UTC'
-    )
-    second_invoice.transactions.create(
       credit_card_number: '666',
       result: "failed",
       created_at: '2012-03-27 14:53:59 UTC'
@@ -168,6 +151,3 @@ describe "Merchants Business Intelligence API" do
     end
   end
 end
-
-# returns the top x merchants ranked by total revenue
-# GET /api/v1/merchants/most_revenue?quantity=x - Brandon
