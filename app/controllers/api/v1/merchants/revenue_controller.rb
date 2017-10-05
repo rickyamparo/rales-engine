@@ -1,4 +1,4 @@
-class Api::V1::RevenueController < ApplicationController
+class Api::V1::Merchants::RevenueController < Api::V1::RevenueController
   def index
     revenue = Merchant.revenue(merchant_params)
     render json: revenue, :serializer => TotalRevenueSerializer

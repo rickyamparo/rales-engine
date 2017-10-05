@@ -94,6 +94,19 @@ describe "Merchants Business Intelligence API" do
       expect(merchant_revenue["revenue"]).to eq("9.00")
     end
   end
+
+  context "GET /merchants/revenue?date=2012-03-27%2014:53:59%20UTC" do
+    it "returns the total revenue for all merchants across successful transactions" do
+
+      date = "2012-03-27%2014:53:59%20UTC"
+      get "/api/v1/merchants/revenue?date=#{date}"
+
+      merchant_revenue = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(merchant_revenue["revenue"]).to eq("9.00")
+    end
+  end
+
   context "GET /merchants/:id/favorite_customer" do
     it "Returns the customer who has conducted the most total number of successful transactions." do
       customer = customer
@@ -105,3 +118,6 @@ describe "Merchants Business Intelligence API" do
     end
   end
 end
+
+# GET /api/v1/merchants/revenue?date=x - Brandon
+# GET /api/v1/merchants/most_revenue?quantity=x - Brandon
