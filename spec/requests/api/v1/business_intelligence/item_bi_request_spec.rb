@@ -10,17 +10,20 @@ describe "Items Business Intelligence API" do
     invoice_1 = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
-      status: "shipped"
+      status: "shipped",
+      created_at: '2012-03-27 14:53:59 UTC'
     )
     invoice_2 = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
-      status: "shipped"
+      status: "shipped",
+      created_at: '2012-04-27 14:53:59 UTC'
     )
     invoice_3 = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
-      status: "shipped"
+      status: "shipped",
+      created_at: '2012-05-27 14:53:59 UTC'
     )
 
     3.times do
@@ -134,6 +137,7 @@ describe "Items Business Intelligence API" do
         best_day = JSON.parse(response.body)
 
         expect(response).to be_success
+        expect(best_day['best_day']).to eq("2012-03-27T14:53:59.000Z")
     end
   end
 
