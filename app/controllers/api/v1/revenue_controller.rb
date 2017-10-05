@@ -1,7 +1,7 @@
 class Api::V1::RevenueController < ApplicationController
   def index
     revenue = Merchant.revenue(merchant_params)
-    render json: revenue, :serializer => TotalRevenueSerializer
+    render json: revenue, :serializer => RevenueSerializer
   end
 
   private

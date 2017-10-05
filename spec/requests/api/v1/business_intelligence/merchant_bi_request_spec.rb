@@ -103,7 +103,7 @@ describe "Merchants Business Intelligence API" do
 
       merchant_revenue = JSON.parse(response.body)
       expect(response).to be_success
-      expect(merchant_revenue["revenue"]).to eq("9.00")
+      expect(merchant_revenue["total_revenue"]).to eq("9.00")
     end
   end
 
