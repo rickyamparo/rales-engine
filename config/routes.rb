@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
       end
-
+      
       resources :customers, only: [:index, :show] do
         resources :favorite_merchant, only: [:index]
       end
@@ -22,7 +22,6 @@ Rails.application.routes.draw do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
       end
-      resources :customers, only: [:index, :show]
 
       resources :invoices, only: [:show, :index]
       resources :merchants, only: [:show, :index] do
