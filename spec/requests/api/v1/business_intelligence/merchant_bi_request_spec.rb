@@ -8,34 +8,40 @@ describe "Merchants Business Intelligence API" do
     good_invoice = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
-      status: "shipped"
+      status: "shipped",
+      created_at: '2012-02-27 14:53:59 UTC'
       )
     bad_invoice = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
-      status: "shipped"
+      status: "shipped",
+      created_at: '2012-02-27 14:53:59 UTC'
     )
     one_month_later_good_invoice = @merchant.invoices.create(
       customer: customer,
       merchant: @merchant,
-      status: "shipped"
+      status: "shipped",
+      created_at: '2012-03-27 14:53:59 UTC'
       )
 
     3.times do
       good_invoice.invoice_items.create(
         item_id: item.id,
         quantity: 2,
-        unit_price: 50
+        unit_price: 50,
+        created_at: '2012-02-27 14:53:59 UTC'
       )
       bad_invoice.invoice_items.create(
         item_id: item.id,
         quantity: 2,
-        unit_price: 100
+        unit_price: 100,
+        created_at: '2012-02-27 14:53:59 UTC'
       )
       one_month_later_good_invoice.invoice_items.create(
         item_id: item.id,
         quantity: 4,
-        unit_price: 75
+        unit_price: 75,
+        created_at: '2012-03-27 14:53:59 UTC'
       )
 
     end
@@ -62,18 +68,18 @@ describe "Merchants Business Intelligence API" do
 
       merchant_revenue = JSON.parse(response.body)
       expect(response).to be_success
-      expect(merchant_revenue["total_revenue"]).to eq('12.00')
+      expect(merchant_revenue["revenue"]).to eq('12.00')
     end
   end
   context "GET /merchants/:id/revenue?date=2012-03-27%2014:53:59%20UTC" do
     it "returns the total revenue for that merchant across successful transactions" do
 
-      date = "2012-03-27 14:53:59 UTC"
+      date = "2012-03-27%2014:53:59%20UTC"
       get "/api/v1/merchants/#{@merchant.id}/revenue?date=#{date}"
 
       merchant_revenue = JSON.parse(response.body)
       expect(response).to be_success
-      expect(merchant_revenue["total_revenue"]).to eq("12.00")
+      expect(merchant_revenue["revenue"]).to eq("9.00")
     end
   end
 end
