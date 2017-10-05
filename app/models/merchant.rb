@@ -4,7 +4,7 @@ class Merchant < ApplicationRecord
   has_many :invoices
   has_many :transactions, through: :invoices
 
-  def revenue(filter = nil)
+  def self.revenue(filter = nil)
     Invoice
     .where(filter)
     .merge(Transaction.success)
