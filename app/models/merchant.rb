@@ -2,6 +2,7 @@ class Merchant < ApplicationRecord
   acts_as_copy_target
   has_many :items
   has_many :invoices
+  has_many :transactions, through: :invoices
 
   def revenue(filter = nil)
     Invoice
@@ -12,10 +13,12 @@ class Merchant < ApplicationRecord
   end
 
   def self.favorite_customer(filter = nil)
+    results =
     Invoice
     .where(filter)
-    .merge(Transaction.success)
-    .joins(:invoice_items, :transactions)
-    .max('count(customer_id)')
+    .group('customer_id')
+    .count
+    Customer.find(results.key(results.values.max))
   end
 end
+    # Merchant.favorite_customer('merchant_id = 2')
