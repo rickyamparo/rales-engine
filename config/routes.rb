@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       namespace :merchants do
+        resources :most_revenue, only: [:index]
+        resources :revenue, only: [:index]
         resources :find, only: [:index]
         resources :find_all, only: [:index]
+        resources :most_items, only: [:index]
       end
       namespace :invoices do
         resources :find, only: [:index]
@@ -20,8 +23,10 @@ Rails.application.routes.draw do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
         resources :most_revenue, only: [:index]
+        resources :most_items, only: [:index]
       end
       resources :items, only: [:index, :show] do
+        resources :best_day, only: [:index]
       end
     end
   end
