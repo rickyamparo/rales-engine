@@ -8,5 +8,4 @@ class Api::V1::BestDayController < ApplicationController
   def item_params
     params.permit(:item_id)
   end
-
 end
