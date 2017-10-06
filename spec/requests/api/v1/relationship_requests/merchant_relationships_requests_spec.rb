@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Merchant RElationships API" do
+describe "Merchant Relationships API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
     @merchant_2 = Merchant.create(id: 2, name: "Johnny")
