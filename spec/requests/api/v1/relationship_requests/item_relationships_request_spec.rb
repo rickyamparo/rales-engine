@@ -100,7 +100,17 @@ end
       invoice_item = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_item["id"]).to eq(InvoiceItem.last.id)
+      expect(invoice_item.last["id"]).to eq(InvoiceItem.last.id)
+    end
+  end
+  context "/api/v1/items/:id/merchant" do
+    it "returns a collection of associated invoice item" do
+      get "/api/v1/items/#{Item.first.id}/merchant"
+
+      merchant = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(merchant["id"]).to eq(Item.first.merchant_id)
     end
   end
 end
