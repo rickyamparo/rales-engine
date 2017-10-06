@@ -100,4 +100,52 @@ describe "Transactions API" do
       expect(transactions.count).to eq(4)
     end
   end
+
+  context "GET /transactions/find?result=success" do
+    it "sends data on a transaction meeting the search criteria" do
+      get "/api/v1/transactions/find?result=success"
+
+      transaction = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(transaction['credit_card_number']).to eq("666")
+    end
+  end
+
+  context "GET /transactions/find_all?result=success" do
+    it "sends data on a transactions meeting the search criteria" do
+      get "/api/v1/transactions/find_all?result=success"
+
+      transactions = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(transactions.first['credit_card_number']).to eq("666")
+      expect(transactions.last['credit_card_number']).to eq("333")
+      expect(transactions.count).to eq(4)
+    end
+  end
+
+  context "GET /transactions/find?id=1" do
+    it "sends data on a transaction meeting the search criteria" do
+      get "/api/v1/transactions/find?id=1"
+
+      transaction = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(transaction['credit_card_number']).to eq("666")
+    end
+  end
+
+  context "GET /transactions/find_all?id=1" do
+    it "sends data on a transactions meeting the search criteria" do
+      get "/api/v1/transactions/find_all?id=1"
+
+      transactions = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(transactions.first['credit_card_number']).to eq("666")
+      expect(transactions.last['credit_card_number']).to eq("666")
+      expect(transactions.count).to eq(1)
+    end
+  end
 end
