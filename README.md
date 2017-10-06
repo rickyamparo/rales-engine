@@ -1,6 +1,6 @@
 # README - Rales Engine
 
-This project is the joint work of [Ricky Amparo](https://github.com/rickyamparo) and [Brandon Stewart](https://github.com/boveus).  This project was part of our curriculum at the [Turing School of Software and Design](turing.io).  The primary learning goal in this project was to implement a RESTful API using Ruby on Rails.  We also covered topics related to implementing advanced Active Record queries, implementing filters and serializers, and building single-responsibility controllers.  We used Travis CI to manage our workflow throughout the project.
+This project is the joint work of [Ricky Amparo](https://github.com/rickyamparo) and [Brandon Stewart](https://github.com/boveus).  This project was part of our curriculum at the [Turing School of Software and Design](www.turing.io).  The primary learning goal in this project was to implement a RESTful API using Ruby on Rails.  We also covered topics related to implementing advanced Active Record queries, implementing filters and serializers, and building single-responsibility controllers.  We used Travis CI to manage our workflow throughout the project.
 
 **Note: the CSV files used as a source for this project are not included in this repository, but they can be downloaded [here](https://github.com/turingschool-examples/sales_engine/tree/master/data). These files must be saved in the db/data directory in order to be used to populate the data from the server.**
 
