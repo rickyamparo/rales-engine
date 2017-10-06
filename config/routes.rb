@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       end
 
       resources :merchants, only: [:show, :index] do
+        resources :items, only: [:index], to: 'merchants/items#index'
+        resources :invoices, only: [:index], to: 'merchants/invoices#index'
         resources :revenue, only: [:index]
         resources :favorite_customer, only: [:index]
       end
