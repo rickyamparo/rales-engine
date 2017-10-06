@@ -55,13 +55,18 @@ Rails.application.routes.draw do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
       end
-      resources :transactions, only: [:index, :show]
+      resources :transactions, only: [:index, :show] do
+        resources :invoice, only: [:index], to: 'transactions/invoice#index'
+      end
 
       namespace :invoice_items do
         resources :find, only: [:index]
         resources :find_all, only: [:index]
       end
-      resources :invoice_items, only: [:index, :show]
+      resources :invoice_items, only: [:index, :show] do
+        resources :invoice, only: [:index], to: 'invoice_items/invoice#index'
+        resources :item, only: [:index], to: 'invoice_items/item#index'
+      end
     end
   end
 end

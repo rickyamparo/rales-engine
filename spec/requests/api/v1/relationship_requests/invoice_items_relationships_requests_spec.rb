@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-describe "Merchant Relationships API" do
+describe "Invoices Relationships API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
     @merchant_2 = Merchant.create(id: 2, name: "Johnny")
@@ -70,7 +68,7 @@ describe "Merchant Relationships API" do
         unit_price: 75,
         created_at: '2012-03-27 14:53:59 UTC'
       )
-      end
+    end
     good_invoice.transactions.create(
       credit_card_number: '666',
       result: "success",
@@ -92,28 +90,29 @@ describe "Merchant Relationships API" do
       created_at: '2012-03-27 14:53:59 UTC'
     )
   end
+  context "GET /api/v1/invoice_items/:id/invoice" do
+    it " returns a collection of associated invoice" do
 
-  context "GET /api/v1/merchants/:id/items"do
-    it "returns a collection of items associated with that merchant" do
-      get "/api/v1/merchants/#{@merchant.id}/items"
+      get "/api/v1/invoice_items/#{InvoiceItem.first.id}/invoice"
 
-      merchant_items = JSON.parse(response.body)
+      item_invoice_invoice = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(merchant_items.count).to eq(1)
-      expect(merchant_items.first['name']).to eq("Sofa")
+      expect(item_invoice_invoice["id"]).to eq(InvoiceItem.first.invoice_id)
     end
   end
+  context "GET /api/v1/invoice_items/:id/item" do
+    it " returns a collection of associated item" do
 
-  context "GET /api/v1/merchants/:id/invoices" do
-    it "returns a collection of invoices associated with that merchant from their known orders" do
-      get "/api/v1/merchants/1/invoices"
+      get "/api/v1/invoice_items/#{InvoiceItem.first.id}/item"
 
-      merchant_invoices = JSON.parse(response.body)
+      item_invoice_invoice = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(merchant_invoices.count).to eq(4)
-      expect(merchant_invoices.first['merchant_id']).to eq(1)
+      expect(item_invoice_invoice["id"]).to eq(InvoiceItem.first.item_id)
     end
   end
 end
+
+# GET /api/v1/invoice_items/:id/invoice returns the associated invoice
+# GET /api/v1/invoice_items/:id/item returns the associated item
