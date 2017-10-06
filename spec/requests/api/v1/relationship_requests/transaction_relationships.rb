@@ -62,11 +62,11 @@ describe "Transaction Relationships API" do
 
   context "GET /api/v1/transactions/:id/invoice" do
     it "returns the associated invoice" do
-       get "/api/v1/transactions/:id/invoice"
+       get "/api/v1/transactions/1/invoice"
 
        transaction_invoice = JSON.parse(response.body)
 
-       expect(respons).to be_success
+       expect(response).to be_success
     end
   end
 end
