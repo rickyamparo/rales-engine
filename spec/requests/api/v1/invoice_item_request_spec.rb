@@ -31,7 +31,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items.first['unit_price']).to eq(2900)
+      expect(invoice_items.first['unit_price']).to eq("29.00")
       expect(invoice_items.count).to eq(3)
     end
   end
@@ -43,7 +43,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items['unit_price']).to eq(2900)
+      expect(invoice_items['unit_price']).to eq("29.00")
     end
   end
 
@@ -54,7 +54,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items['unit_price']).to eq(2900)
+      expect(invoice_items['unit_price']).to eq("29.00")
     end
   end
 
@@ -65,7 +65,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items.first['unit_price']).to eq(2900)
+      expect(invoice_items.first['unit_price']).to eq("29.00")
       expect(invoice_items.count).to eq(3)
     end
   end
@@ -77,7 +77,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items['unit_price']).to eq(2900)
+      expect(invoice_items['unit_price']).to eq("29.00")
     end
   end
 
@@ -88,7 +88,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items.first['unit_price']).to eq(2900)
+      expect(invoice_items.first['unit_price']).to eq("29.00")
       expect(invoice_items.count).to eq(3)
     end
   end
@@ -100,7 +100,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items['unit_price']).to eq(2900)
+      expect(invoice_items['unit_price']).to eq("29.00")
     end
   end
 
@@ -111,7 +111,7 @@ describe "Invoice Items API" do
       invoice_items = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_items.first['unit_price']).to eq(2900)
+      expect(invoice_items.first['unit_price']).to eq("29.00")
       expect(invoice_items.count).to eq(3)
     end
   end
