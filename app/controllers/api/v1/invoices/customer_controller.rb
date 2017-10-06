@@ -1,4 +1,4 @@
-class Api::V1::Invoices::CustomersController < ApplicationController
+class Api::V1::Invoices::CustomerController < ApplicationController
   def index
     invoice = Invoice.find(invoice_params[:invoice_id].to_i)
     render json: Customer.find(invoice.customer_id)

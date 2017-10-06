@@ -104,7 +104,7 @@ describe "Invoices Relationships API" do
   end
   context "GET /api/v1/invoices/:id/merchants" do
     it " returns a collection of associated merchants" do
-      get "/api/v1/invoices/#{Invoice.first.id}/merchants"
+      get "/api/v1/invoices/#{Invoice.first.id}/merchant"
 
       merchant = JSON.parse(response.body)
       expect(response).to be_success
@@ -115,7 +115,7 @@ describe "Invoices Relationships API" do
 
   context "GET /api/v1/invoices/:id/customers" do
     it " returns a collection of associated customer" do
-      get "/api/v1/invoices/#{Invoice.first.id}/customers"
+      get "/api/v1/invoices/#{Invoice.first.id}/customer"
 
       customer = JSON.parse(response.body)
       expect(response).to be_success

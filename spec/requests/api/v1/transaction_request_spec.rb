@@ -37,7 +37,6 @@ describe "Transactions API" do
 
       expect(response).to be_success
       expect(transactions.first['credit_card_number']).to eq("666")
-      expect(transactions.last['credit_card_number']).to eq("333")
       expect(transactions.count).to eq(4)
     end
   end
@@ -79,24 +78,23 @@ describe "Transactions API" do
 
   context "GET /transactions/find?invoice_id=1" do
     it "sends data on a transaction meeting the search criteria" do
-      get "/api/v1/transactions/find?invoice_id=1"
+      get "/api/v1/transactions/find?invoice_id=#{Invoice.first.id}"
 
       transaction = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(transaction['credit_card_number']).to eq("666")
+      expect(transaction['credit_card_number']).to eq("333")
     end
   end
 
   context "GET /transactions/find_all?invoice_id=1" do
     it "sends data on a transactions meeting the search criteria" do
-      get "/api/v1/transactions/find_all?invoice_id=1"
+      get "/api/v1/transactions/find_all?invoice_id=#{Invoice.first.id}"
 
       transactions = JSON.parse(response.body)
 
       expect(response).to be_success
       expect(transactions.first['credit_card_number']).to eq("666")
-      expect(transactions.last['credit_card_number']).to eq("333")
       expect(transactions.count).to eq(4)
     end
   end
@@ -120,14 +118,13 @@ describe "Transactions API" do
 
       expect(response).to be_success
       expect(transactions.first['credit_card_number']).to eq("666")
-      expect(transactions.last['credit_card_number']).to eq("333")
-      expect(transactions.count).to eq(4)
+      expect(transactions.count).to eq(3)
     end
   end
 
   context "GET /transactions/find?id=1" do
     it "sends data on a transaction meeting the search criteria" do
-      get "/api/v1/transactions/find?id=1"
+      get "/api/v1/transactions/find?id=#{Transaction.first.id}"
 
       transaction = JSON.parse(response.body)
 
@@ -138,7 +135,7 @@ describe "Transactions API" do
 
   context "GET /transactions/find_all?id=1" do
     it "sends data on a transactions meeting the search criteria" do
-      get "/api/v1/transactions/find_all?id=1"
+      get "/api/v1/transactions/find_all?id=#{Transaction.first.id}"
 
       transactions = JSON.parse(response.body)
 
