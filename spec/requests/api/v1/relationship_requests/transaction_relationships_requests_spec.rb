@@ -8,18 +8,21 @@ describe "Transaction Relationships API" do
     item_2 = Item.create(id:2, merchant_id: 1, name: "Guitar")
     item_3 = Item.create(id:3, merchant_id: 1, name: "Metal")
     invoice_1 = @merchant.invoices.create(
+      id:1,
       customer: customer,
       merchant: @merchant,
       status: "shipped",
       created_at: '2012-03-27 14:53:59 UTC'
     )
     invoice_2 = @merchant.invoices.create(
+      id: 2,
       customer: customer,
       merchant: @merchant,
       status: "shipped",
       created_at: '2012-04-27 14:53:59 UTC'
     )
     invoice_3 = @merchant.invoices.create(
+      id: 3,
       customer: customer,
       merchant: @merchant,
       status: "shipped",
@@ -44,6 +47,7 @@ describe "Transaction Relationships API" do
       )
     end
     invoice_1.transactions.create(
+      id: 1,
       credit_card_number: '666',
       result: "success",
       created_at: '2012-03-27 14:53:59 UTC'
@@ -67,6 +71,7 @@ describe "Transaction Relationships API" do
        transaction_invoice = JSON.parse(response.body)
 
        expect(response).to be_success
+       expect(transaction_invoice['id']).to eq(1)
     end
   end
 end
