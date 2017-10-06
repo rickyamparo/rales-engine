@@ -1,6 +1,6 @@
 class Api::V1::Items::InvoiceItemsController < ApplicationController
   def index
-    invoice_items = InvoiceItem.find_invoice_item(item_params)
+    invoice_items = InvoiceItem.where(item_params)
     render json: invoice_items
   end
 
