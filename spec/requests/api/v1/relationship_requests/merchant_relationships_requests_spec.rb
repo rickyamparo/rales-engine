@@ -3,9 +3,7 @@ require 'rails_helper'
 describe "Merchant Relationships API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
-    @merchant_2 = Merchant.create(id: 2, name: "Johnny")
     customer = Customer.create(id: 1, first_name: "Pauly", last_name: "Shore")
-    customer2 = Customer.create(id: 2, first_name: "Jazzy", last_name: "Jeff")
     item = Item.create(id: 1, merchant_id: 1, name: 'Sofa')
 
     good_invoice = @merchant.invoices.create(
