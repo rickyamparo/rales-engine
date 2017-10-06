@@ -6,11 +6,11 @@ class Transaction < ApplicationRecord
   scope :failure, ->{ where(result: 'failure') }
 
   def self.find_transaction(params)
-    find_by(params)
+    were(params)
   end
 
   def self.find_all(params)
     where(params)
   end
-  
+
 end
