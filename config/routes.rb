@@ -42,10 +42,16 @@ Rails.application.routes.draw do
       end
 
       namespace :transactions do
-        resources :find, only:[:index]
+        resources :find, only: [:index]
         resources :find_all, only: [:index]
       end
       resources :transactions, only: [:index, :show]
+
+      namespace :invoice_items do
+        resources :find, only: [:index]
+        resources :find_all, only: [:index]
+      end
+      resources :invoice_items, only: [:index, :show]
     end
   end
 end
