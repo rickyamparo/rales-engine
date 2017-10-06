@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         resources :transactions, only: [:index], to: 'invoices/transactions#index'
         resources :merchants, only: [:index], to: 'invoices/merchants#index'
         resources :items, only: [:index], to: 'invoices/items#index'
+        resources :customers, only: [:index], to: 'invoices/customers#index'
       end
 
       resources :merchants, only: [:show, :index] do
