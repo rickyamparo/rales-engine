@@ -23,7 +23,14 @@ Rails.application.routes.draw do
         resources :favorite_merchant, only: [:index]
       end
 
-      resources :invoices, only: [:show, :index]
+      resources :invoices, only: [:show, :index] do
+        resources :transactions, only: [:index], to: 'invoices/transactions#index'
+        resources :merchant, only: [:index], to: 'invoices/merchant#index'
+        resources :items, only: [:index], to: 'invoices/items#index'
+        resources :customer, only: [:index], to: 'invoices/customer#index'
+        resources :invoice_items, only: [:index], to: 'invoices/invoice_items#index'
+      end
+
       resources :merchants, only: [:show, :index] do
         resources :items, only: [:index], to: 'merchants/items#index'
         resources :revenue, only: [:index]
@@ -36,7 +43,9 @@ Rails.application.routes.draw do
         resources :most_revenue, only: [:index]
         resources :most_items, only: [:index]
       end
+
       resources :items, only: [:index, :show] do
+        resources :invoice_items, only: [:index], to: 'items/invoice_items#index'
         resources :best_day, only: [:index]
       end
 
