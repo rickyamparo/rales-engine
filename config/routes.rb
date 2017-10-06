@@ -43,7 +43,7 @@ Rails.application.routes.draw do
       end
 
       resources :items, only: [:index, :show] do
-        resources :invoice_items, only: [:index]
+        resources :invoice_items, only: [:index], to: 'items/invoice_items#index'
         resources :best_day, only: [:index]
       end
 

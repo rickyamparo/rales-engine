@@ -170,19 +170,7 @@ describe "Items API" do
         expect(response).to be_success
         expect(item['name']).to eq("Kunai")
       end
-
-    context "/api/v1/items/:id/invoice_items" do
-      it "returns a collection of associated invoice item" do
-        get "/api/v1/items/#{Item.first.id}/invoice_items"
-
-        invoice_item = JSON.parse(response.body)
-
-        expect(response).to be_success
-        expect(invoice_item["id"]).to eq(1)
-      end
-    end
-
-    context ""
+    
 end
 
 
