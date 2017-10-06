@@ -98,7 +98,7 @@ describe "Invoices Relationships API" do
       item_invoice_invoice = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_invoice_invoice["id"]).to eq(InvoiceItem.first.invoice_id)
+      expect(item_invoice_invoice["id"]).to eq(InvoiceItem.first.invoice_id)
     end
   end
   context "GET /api/v1/invoice_items/:id/item" do
@@ -109,7 +109,7 @@ describe "Invoices Relationships API" do
       item_invoice_invoice = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(invoice_invoice_invoice["id"]).to eq(InvoiceItem.first.item_id)
+      expect(item_invoice_invoice["id"]).to eq(InvoiceItem.first.item_id)
     end
   end
 end
