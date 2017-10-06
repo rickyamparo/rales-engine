@@ -113,7 +113,7 @@ describe "Merchant RElationships API" do
 
       expect(response).to be_success
       expect(merchant_invoices.count).to eq(4)
-      expect(merchant_invoices.first['merchant_id']).to eq(1z)
+      expect(merchant_invoices.first['merchant_id']).to eq(1)
     end
   end
 end
