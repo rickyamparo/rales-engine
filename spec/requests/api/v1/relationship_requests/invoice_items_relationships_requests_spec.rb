@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "Invoices Relationships API" do
   before(:each) do
     @merchant = Merchant.create(id: 1, name: "Timmy")
@@ -69,26 +71,6 @@ describe "Invoices Relationships API" do
         created_at: '2012-03-27 14:53:59 UTC'
       )
     end
-    good_invoice.transactions.create(
-      credit_card_number: '666',
-      result: "success",
-      created_at: '2012-03-27 14:53:59 UTC'
-    )
-    one_month_later_good_invoice.transactions.create(
-      credit_card_number: '666',
-      result: "success",
-      created_at: '2012-04-27 14:53:59 UTC'
-    )
-    bad_invoice.transactions.create(
-      credit_card_number: '666',
-      result: "failed",
-      created_at: '2012-03-27 14:53:59 UTC'
-    )
-    merchant_2_invoice.transactions.create(
-      credit_card_number: '666',
-      result: "success",
-      created_at: '2012-03-27 14:53:59 UTC'
-    )
   end
   context "GET /api/v1/invoice_items/:id/invoice" do
     it " returns a collection of associated invoice" do
@@ -113,6 +95,3 @@ describe "Invoices Relationships API" do
     end
   end
 end
-
-# GET /api/v1/invoice_items/:id/invoice returns the associated invoice
-# GET /api/v1/invoice_items/:id/item returns the associated item

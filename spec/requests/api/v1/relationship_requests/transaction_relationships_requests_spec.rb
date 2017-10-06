@@ -14,20 +14,6 @@ describe "Transaction Relationships API" do
       status: "shipped",
       created_at: '2012-03-27 14:53:59 UTC'
     )
-    invoice_2 = @merchant.invoices.create(
-      id: 2,
-      customer: customer,
-      merchant: @merchant,
-      status: "shipped",
-      created_at: '2012-04-27 14:53:59 UTC'
-    )
-    invoice_3 = @merchant.invoices.create(
-      id: 3,
-      customer: customer,
-      merchant: @merchant,
-      status: "shipped",
-      created_at: '2012-05-27 14:53:59 UTC'
-    )
 
     3.times do
       invoice_1.invoice_items.create(
@@ -35,29 +21,9 @@ describe "Transaction Relationships API" do
         quantity: 4,
         unit_price: 50
       )
-      invoice_2.invoice_items.create(
-        item_id: item_2.id,
-        quantity: 3,
-        unit_price: 50
-      )
-      invoice_3.invoice_items.create(
-        item_id: item_3.id,
-        quantity: 2,
-        unit_price: 50
-      )
     end
     invoice_1.transactions.create(
       id: 1,
-      credit_card_number: '666',
-      result: "success",
-      created_at: '2012-03-27 14:53:59 UTC'
-    )
-    invoice_2.transactions.create(
-      credit_card_number: '666',
-      result: "success",
-      created_at: '2012-04-27 14:53:59 UTC'
-    )
-    invoice_3.transactions.create(
       credit_card_number: '666',
       result: "success",
       created_at: '2012-03-27 14:53:59 UTC'
