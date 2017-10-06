@@ -104,4 +104,16 @@ describe "Merchant RElationships API" do
       expect(merchant_items.first['name']).to eq("Sofa")
     end
   end
+
+  context "GET /api/v1/merchants/:id/invoices" do
+    it "returns a collection of invoices associated with that merchant from their known orders" do
+      get "/api/v1/merchants/1/invoices"
+
+      merchant_invoices = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(merchant_invoices.count).to eq(4)
+      expect(merchant_invoices.first['merchant_id']).to eq(1z)
+    end
+  end
 end
