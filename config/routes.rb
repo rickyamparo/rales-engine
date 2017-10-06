@@ -35,9 +35,12 @@ Rails.application.routes.draw do
         resources :most_revenue, only: [:index]
         resources :most_items, only: [:index]
       end
+
       resources :items, only: [:index, :show] do
+        resources :invoice_items, only: [:index]
         resources :best_day, only: [:index]
       end
+
       namespace :transactions do
         resources :find, only:[:index]
         resources :find_all, only: [:index]
