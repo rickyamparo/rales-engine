@@ -171,17 +171,20 @@ describe "Items API" do
         expect(item['name']).to eq("Kunai")
       end
 
-    context "GET /items/find_all?unit_price=10000"
-      it "sends data on an item meeting the search criteria" do
-        Item.create(id: 5, name: "Kunai", unit_price: 10000, merchant_id: Merchant.first.id)
-        Item.create(id: 6, name: "Smoke Ball", unit_price: 10000, merchant_id: Merchant.first.id)
+    context "/api/v1/items/:id/invoice_items" do
+      it "returns a collection of associated invoice item" do
+        get "/api/v1/items/#{Item.first.id}/invoice_items"
 
-        get "/api/v1/items/find_all?unit_price=10000"
-
-        items = JSON.parse(response.body)
+        invoice_item = JSON.parse(response.body)
 
         expect(response).to be_success
-        expect(items.first['name']).to eq("Kunai")
-        expect(items.last['name']).to eq("Smoke Ball")
+        expect(invoice_item["id"]).to eq(1)
       end
+    end
+
+    context ""
 end
+
+
+# GET /api/v1/items/:id/invoice_items returns a collection of associated invoice item
+# GET /api/v1/items/:id/merchant returns the associated merchant
