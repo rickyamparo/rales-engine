@@ -98,8 +98,8 @@ describe "Invoices Relationships API" do
 
       invoice_transactions = JSON.parse(response.body)
       expect(response).to be_success
-      expect(invoice_transactions.count).to eq(4)
-      expect(invoice_transactions["credit_card_number"]).to eq("666")
+      expect(invoice_transactions.count).to eq(1)
+      expect(invoice_transactions.first["credit_card_number"]).to eq("666")
     end
   end
   context "GET /api/v1/invoices/:id/merchants" do
@@ -125,13 +125,13 @@ describe "Invoices Relationships API" do
   end
 
   context "GET /api/v1/invoices/:id/items" do
-    xit " returns a collection of associated items" do
+    it " returns a collection of associated items" do
       get "/api/v1/invoices/#{Invoice.first.id}/items"
 
       invoice_items = JSON.parse(response.body)
       expect(response).to be_success
 
-      expect(invoice_items['name']).to eq('Sofa')
+      expect(invoice_items.first['name']).to eq('Sofa')
     end
   end
 end
