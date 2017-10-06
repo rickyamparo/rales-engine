@@ -18,11 +18,13 @@ rake db:migrate
 rake pop:all
 ```
 
-To view launch the server, run the following command in the terminal
+To launch the server and interact wit the application, run the following command in the terminal
 
 ```ruby
 rails s
 ```
+You can visit any of the routes in our application and view them from your browser by navigating to localhost:3000. 
+To view the JSON in a human readable way, it is recommended that you download a Google chrome plugin, or alternatively, view the JSON endpoints in Firefox, which makes JSON human readable by default.
 
 A full listing of the routes in our application can be found below:
 
